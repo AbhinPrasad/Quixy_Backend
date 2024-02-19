@@ -1,0 +1,12 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore .env file (containing sensitive information)
+.env
+
+# npm lock file
+package-lock.json
+
