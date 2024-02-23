@@ -4,7 +4,7 @@ dotenv.config();
 import cors from "cors";
 import chalk from "chalk";
 
-import connectDB from "./config/index.js";
+import connectDB from "./config/db.js";
 import { errorHandler } from "./middlewares/index.js";
 
 const app = express();

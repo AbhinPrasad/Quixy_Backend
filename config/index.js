@@ -1,13 +1,10 @@
-import mongoose from "mongoose";
-import chalk from 'chalk';
+const apiRoot = '/api/v1/quixy'
 
-const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log(chalk.yellowBright("Database connected"));
-    } catch (err) {
-        console.log(chalk.redBright("Database connection failed",err));
+const config = {
+    apiRoot,
+    basePath: (path) =>{
+        return apiRoot.replace(/\/$/, '') + '/' + path.replace(/^\//, '');
     }
 }
 
-export default connectDB;
+export default config;
