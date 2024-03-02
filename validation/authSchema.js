@@ -2,7 +2,7 @@ import Joi from "joi";
 import moment from "moment";
 import { messageConstants as message } from "../constants/index.js";
 
-export const authRegSchema = Joi.object({
+export const signupSchema = Joi.object({
   userName: Joi.string().required(),
   email: Joi.string().email().required().messages({
     "string.email": message.invalidEmail,
@@ -33,4 +33,14 @@ export const authRegSchema = Joi.object({
     }),
   profession: Joi.string().required(),
   company: Joi.string().optional(),
+});
+
+export const loginSchema = Joi.object().keys({
+  email: Joi.string().email().required().messages({
+    "string.email": message.invalidEmail,
+    "any.required": message.EmailRequired,
+  }),
+  password: Joi.string().required().messages({
+    "any.required": message.passwordRequired,
+  }),
 });

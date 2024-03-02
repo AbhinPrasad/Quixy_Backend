@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import chalk from "chalk";
 import moment from "moment";
 import { User } from "../models/index.js";
 import { messageConstants as message } from "../constants/index.js";
@@ -42,7 +41,37 @@ export const userSignup = async (req, res, next) => {
       savedUser.id ? { id: savedUser.id } : {}
     );
   } catch (error) {
-    console.log(chalk.redBright("user-signup error:", error));
     next(error);
   }
+};
+
+export const userLogin = async (req, res, next) => {
+  try {
+    const body = req.body;
+    const user = await User.findOne({ email: body.email, isActive: true });
+
+    if (!user) {
+      return next({ statusCode: 400, message: message.userNotFound });
+    }
+    const passwordMatch = bcrypt.compareSync(body.password, user.password);
+
+    if (!passwordMatch) {
+      return next({ statusCode: 400, message: message.passwordIncorrect });
+    }
+    const token = generateToken(user);
+    response(res, message.loginSuccess, { token });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const generateToken = (user) => {
+  const payload = {
+    userId: user._id,
+    username: user.username,
+    email: user.email,
+  };
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+  return token;
 };
