@@ -1,21 +1,36 @@
 import Joi from "joi";
 import moment from "moment";
+import { messageConstants as message } from "../constants/index.js";
 
 export const authRegSchema = Joi.object({
-    userName: Joi.string().required(),
-    email: Joi.string().email().required(),
-    phone: Joi.number().optional(),
-    password: Joi.string().min(8).required(),
-    confirmPassword: Joi.ref("password"), //Must match the value of 'password' field
-    dateOfBirth: Joi.string()
+  userName: Joi.string().required(),
+  email: Joi.string().email().required().messages({
+    "string.email": message.invalidEmail,
+    "any.required": message.EmailRequired,
+  }),
+  phone: Joi.number().optional().allow(""),
+  password: Joi.string()
+    .min(8)
+    .message(message.passwordMinValidation)
+    .pattern(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/
+    )
+    .message(message.passwordValidation),
+  confirmPassword: Joi.string()
+    .valid(Joi.ref("password"))
+    .required()
+    .messages({ "any.only": message.passwordNotMatch }),
+  dateOfBirth: Joi.string()
     .required()
     .custom((value, helpers) => {
-        const dob = moment(value, "DD-MM-YYYY", true); // Parse date string using Moment.js
-        if (!dob.isValid()) {
-            return helpers.message({ custom: 'must be a valid date in the format DD-MM-YYYY' });
-        }
-        return value;
+      const dob = moment(value, "DD-MM-YYYY", true);
+      if (!dob.isValid()) {
+        return helpers.message({
+          custom: message.dateValidation,
+        });
+      }
+      return value;
     }),
-    profession: Joi.string().required,
-    company: Joi.string().optional()
-})
+  profession: Joi.string().required(),
+  company: Joi.string().optional(),
+});
