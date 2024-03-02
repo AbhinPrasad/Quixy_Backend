@@ -6,7 +6,7 @@ import chalk from "chalk";
 
 import connectDB from "./config/db.js";
 import { errorHandler } from "./middlewares/index.js";
-import { authRoutes } from "./routes/index.js";
+import { authRoutes,projectRoutes } from "./routes/index.js";
 
 const app = express();
 
@@ -21,7 +21,9 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
 app.use("/",authRoutes);
+app.use("/",projectRoutes);
 
 app.use(errorHandler);
 
