@@ -1,4 +1,7 @@
 export default {
     prod: "PRODUCTION",
-    dev: "DEVELOPMENT"
+    dev: "DEVELOPMENT",
+    admin: "administrator",
+    masterAdmin: "master-administrator",
+    active: "active",
 }

@@ -50,16 +50,27 @@ const userSchema = new Schema({
     },
     masterAdmin: {
       type: Boolean,
-      required: true
+      default: false
     },
     isActive: {
       type: Boolean,
+      default: true
+    }
+  }],
+  issues: [{
+    issueId: {
+      type: Schema.Types.ObjectId,
       required: true
+    },
+    deleted: {
+      type:Boolean,
+      default:false
     }
   }],
   isActive: {
     type: Boolean,
-    required: true
+    required: true,
+    default: true
   }
 });
 

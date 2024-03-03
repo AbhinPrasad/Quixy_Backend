@@ -10,6 +10,10 @@ const projectSchema = new Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: false,
+  },
   masterAdminId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -26,11 +30,16 @@ const projectSchema = new Schema({
       },
       isActive: {
         type: Boolean,
-        required: true,
+        default: true
       },
       joinedDate: {
         type: Date,
         required: true,
+      },
+      status: {
+        type: String,
+        default: "invited",
+        enum: ["active", "inactive","invited"]
       },
       updatedBy: {},
     },
@@ -43,7 +52,7 @@ const projectSchema = new Schema({
       },
       isActive: {
         type: Boolean,
-        required: true,
+        default: true
       },
       deleted: {
         type: Boolean,
@@ -59,7 +68,7 @@ const projectSchema = new Schema({
       },
       deleted: {
         type: Boolean,
-        required: true,
+        default: false
       },
     },
   ],
@@ -70,7 +79,7 @@ const projectSchema = new Schema({
   },
   deleted: {
     type: Boolean,
-    required: true,
+    default: false
   },
   updatedAt: {
     type: Date,

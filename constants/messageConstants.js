@@ -14,4 +14,8 @@ export default {
     loginSuccess: "logged in successfully",
     userInactive: "user is not active",
     passwordIncorrect: "incorrect password",
+    projectShortMin: 'Project short name must be at least 2 characters',
+    projectShortMax: 'Project short name must be at most 4 characters',
+    createProjectFailed: "Failed to create project",
+    createProjectSuccess: "Project created successfully",
 }

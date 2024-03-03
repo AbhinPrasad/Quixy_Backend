@@ -1,6 +1,6 @@
 import moment from "moment";
 
-const createdBy = (req) => {
+export const createdBy = (req) => {
   try {
     const info = {};
     info.requestMethod = req.method;

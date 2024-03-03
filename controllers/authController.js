@@ -22,12 +22,10 @@ export const userSignup = async (req, res, next) => {
       email: body.email,
       phone: body.phone,
       password: hashedPassword,
-      dateOfBirth: moment.utc(body.dateOfBirth).toDate(),
+      dateOfBirth: moment.utc(body.dateOfBirth, 'DD-MM-YYYY').toDate(),
       profession: body.profession,
       company: body.company,
       joinedDate: moment().toDate(),
-      projects: [],
-      isActive: true,
     });
 
     const savedUser = await newUser.save();
